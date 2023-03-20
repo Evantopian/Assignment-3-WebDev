@@ -16,27 +16,29 @@ function addRow() {
     row.appendChild(cell);
   }
   table.appendChild(row);
+  updateRowCount();
 }
 
 function addColumn() {
-    if (numRows === 0) {
-      numRows++;
-    }
-    numCols++;
-    for (let i = 0; i < numRows; i++) {
-      const cell = document.createElement("td");
-      cell.onclick = function () {
-        cell.style.background = colorSelected;
-      };
-      table.rows[i].appendChild(cell);
-    }
+  if (numRows === 0) {
+    numRows++;
   }
-  
+  numCols++;
+  for (let i = 0; i < numRows; i++) {
+    const cell = document.createElement("td");
+    cell.onclick = function () {
+      cell.style.background = colorSelected;
+    };
+    table.rows[i].appendChild(cell);
+  }
+  updateColCount();
+}
 
 function removeRow() {
   if (numRows > 0) {
     numRows--;
     table.deleteRow(numRows);
+    updateRowCount();
   }
 }
 
@@ -46,6 +48,7 @@ function removeColumn() {
     for (let i = 0; i < numRows; i++) {
       table.rows[i].deleteCell(numCols);
     }
+    updateColCount();
   }
 }
 
@@ -76,9 +79,18 @@ function fillAll() {
 }
 
 function clearAll() {
-    const cells = document.querySelectorAll("td");
-    for (let i = 0; i < cells.length; i++) {
-      cells[i].style.background = "";
-    }
+  const cells = document.querySelectorAll("td");
+  for (let i = 0; i < cells.length; i++) {
+    cells[i].style.background = "";
+  }
 }
-  
+
+function updateRowCount() {
+  const rowCount = document.getElementById("rowCount");
+  rowCount.textContent = `Number of rows: ${numRows}`;
+}
+
+function updateColCount() {
+  const colCount = document.getElementById("colCount");
+  colCount.textContent = `Number of columns: ${numCols}`;
+}
