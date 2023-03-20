@@ -19,46 +19,66 @@ function addRow() {
 }
 
 function addColumn() {
-  if (numRows === 0) {
-    numRows++;
+    if (numRows === 0) {
+      numRows++;
+    }
+    numCols++;
+    for (let i = 0; i < numRows; i++) {
+      const cell = document.createElement("td");
+      cell.onclick = function () {
+        cell.style.background = colorSelected;
+      };
+      table.rows[i].appendChild(cell);
+    }
   }
-  numCols++;
-  for (let i = 0; i < numRows; i++) {
-    const cell = document.createElement("td");
-    cell.onclick = function () {
-      cell.style.background = colorSelected;
+  
+
+function removeRow() {
+  if (numRows > 0) {
+    numRows--;
+    table.deleteRow(numRows);
+  }
+}
+
+function removeColumn() {
+  if (numCols > 0) {
+    numCols--;
+    for (let i = 0; i < numRows; i++) {
+      table.rows[i].deleteCell(numCols);
+    }
+  }
+}
+
+function selectColor() {
+  colorSelected = document.getElementById("selectedColorId").value;
+  const cells = document.querySelectorAll("td");
+  for (let i = 0; i < cells.length; i++) {
+    cells[i].onclick = function () {
+      cells[i].style.background = colorSelected;
     };
-    table.rows[i].appendChild(cell);
   }
 }
 
-// Remove a row
-function removeR() {
-    alert("Clicked Remove Row"); // Replace this line with your code.
+function fillUncolored() {
+  const cells = document.querySelectorAll("td");
+  for (let i = 0; i < cells.length; i++) {
+    if (!cells[i].style.background) {
+      cells[i].style.background = colorSelected;
+    }
+  }
 }
 
-// Remove a column
-function removeC() {
-    alert("Clicked Remove Col"); // Replace this line with your code.
+function fillAll() {
+  const cells = document.querySelectorAll("td");
+  for (let i = 0; i < cells.length; i++) {
+    cells[i].style.background = colorSelected;
+  }
 }
 
-// Set global variable for selected color
-function selectColor(){
-    colorSelected = document.getElementById("selectedColorId").value;
-    console.log(colorSelected);
+function clearAll() {
+    const cells = document.querySelectorAll("td");
+    for (let i = 0; i < cells.length; i++) {
+      cells[i].style.background = "";
+    }
 }
-
-// Fill all uncolored cells
-function fillU(){
-    alert("Clicked Fill All Uncolored"); // Replace this line with your code.
-}
-
-// Fill all cells
-function fillAll(){
-    alert("Clicked Fill All"); // Replace this line with your code.
-}
-
-// Clear all cells
-function clearAll(){
-    alert("Clicked Clear All"); // Replace this line with your code.
-}
+  
